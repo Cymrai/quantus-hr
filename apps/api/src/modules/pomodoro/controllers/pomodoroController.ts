@@ -22,7 +22,7 @@ class PomodoroController {
     }
   }
 
-  async stopPomodoro(req: Request, Response) {
+  async stopPomodoro(req: Request, res: Response) {
     try {
       const userId = req.user?.id; // Assuming user is authenticated and attached to request
       if (!userId) {
