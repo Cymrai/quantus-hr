@@ -20,7 +20,7 @@ export class EmployeesService {
 
   async update(id: string, data: Partial<Employee>) {
     await this.findOne(id);
-    await this.repo.update(id, data);
+    await this.repo.update(id, data as any);
     return this.findOne(id);
   }
 

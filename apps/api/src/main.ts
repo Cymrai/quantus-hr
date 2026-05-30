@@ -1,13 +1,14 @@
-import express from 'express';
-import cors from 'cors';
+import * as express from 'express';
+import { Express } from 'express';
+import * as cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
+import * as morgan from 'morgan';
+import * as dotenv from 'dotenv';
 import infrastructureRoutes from './routes/infrastructureRoutes';
 
 dotenv.config();
 
-const app = express();
+const app: Express = express();
 app.use(express.json());
 app.use(
   cors({
@@ -15,7 +16,7 @@ app.use(
   }),
 );
 app.use(helmet());
-app.use(morgan('tiny')); // 'combined' logs full headers/body — avoid for security
+app.use(morgan('tiny'));
 
 // Routes
 app.use('/api/infrastructure', infrastructureRoutes);

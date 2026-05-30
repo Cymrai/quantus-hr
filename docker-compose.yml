@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   postgres:
@@ -10,11 +10,11 @@ services:
       POSTGRES_PASSWORD: quantus
       POSTGRES_DB: quantus_hr
     ports:
-      - '5432:5432'
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U quantus -d quantus_hr']
+      test: ["CMD-SHELL", "pg_isready -U quantus -d quantus_hr"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,12 +24,12 @@ services:
     container_name: quantus_redis
     restart: unless-stopped
     ports:
-      - '6379:6379'
+      - "6379:6379"
     volumes:
       - redis_data:/data
     command: redis-server --save 60 1 --loglevel warning
     healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
+      test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -41,13 +41,17 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
-      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
-      - '9200:9200'
+      - "9200:9200"
     volumes:
       - es_data:/usr/share/elasticsearch/data
     healthcheck:
-      test: ['CMD-SHELL', 'curl -s http://localhost:9200/_cluster/health | grep -q "green\|yellow"']
+      test:
+        [
+          "CMD-SHELL",
+          'curl -s http://localhost:9200/_cluster/health | grep -q "green\|yellow"',
+        ]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -56,8 +60,8 @@ services:
     image: mailhog/mailhog:latest
     container_name: quantus_mail
     ports:
-      - '1025:1025'
-      - '8025:8025'
+      - "1025:1025"
+      - "8025:8025"
 
 volumes:
   postgres_data:
