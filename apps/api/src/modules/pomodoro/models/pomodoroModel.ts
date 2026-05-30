@@ -1,36 +1,13 @@
-import { PrismaClient } from '@prisma/client';
+/**
+ * pomodoroModel.ts
+ *
+ * NOTE: This file has been intentionally removed from active use.
+ * The service layer (pomodoroService.ts) directly interacts with Prisma as the
+ * single authoritative pattern for this module. This file is kept here as a
+ * placeholder to document the decision.
+ *
+ * TODO: Delete this file once the team has confirmed the service-directly-uses-Prisma
+ * pattern is the accepted standard across the codebase.
+ */
 
-const prisma = new PrismaClient();
-
-class PomodoroModel {
-  async createPomodoroSession(userId: string) {
-    try {
-      const pomodoroSession = await prisma.pomodoroSession.create({
-        data: {
-          userId,
-          startTime: new Date(),
-          endTime: null,
-          status: 'ACTIVE',
-        },
-      });
-      return pomodoroSession;
-    } catch (error) {
-      console.error('Error creating Pomodoro session:', error);
-      throw new Error('Failed to create Pomodoro session');
-    }
-  }
-
-  async updatePomodoroSession(sessionId: string, endTime: Date) {
-    try {
-      await prisma.pomodoroSession.update({
-        where: { id: sessionId },
-        data: { endTime, status: 'COMPLETED' },
-      });
-    } catch (error) {
-      console.error('Error updating Pomodoro session:', error);
-      throw new Error('Failed to update Pomodoro session');
-    }
-  }
-}
-
-export default PomodoroModel;
+export {};
