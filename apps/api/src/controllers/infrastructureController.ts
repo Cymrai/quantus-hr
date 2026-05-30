@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import AWS from 'aws-sdk';
+import * as AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import crypto from 'crypto';
 

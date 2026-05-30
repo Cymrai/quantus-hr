@@ -1,8 +1,9 @@
-import express, { Express } from 'express';
-import cors from 'cors';
+import * as express from 'express';
+import { Express } from 'express';
+import * as cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
+import * as morgan from 'morgan';
+import * as dotenv from 'dotenv';
 import infrastructureRoutes from './routes/infrastructureRoutes';
 
 dotenv.config();
