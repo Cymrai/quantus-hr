@@ -1,22 +1,23 @@
 import { prisma } from '../../../config/prisma';
-import { Employee } from '../interfaces/employee.interface';
 
-// [MAJOR] Replaced `any` with the concrete Employee interface.
 export class EmployeeRepository {
-  // [MAJOR] findAll accepts pagination parameters to avoid unbounded queries.
-  async findAll(skip: number, take: number): Promise<Employee[]> {
-    // [MINOR] Let errors propagate naturally so the original stack trace is preserved.
-    return prisma.employee.findMany({ skip, take }) as Promise<Employee[]>;
+  async findAll(): Promise<any[]> {
+    try {
+      return await prisma.employee.findMany();
+    } catch (error) {
+      throw new Error('Failed to fetch employees', { cause: error });
+    }
   }
 
-  async findOne(id: number): Promise<Employee | null> {
-    // [MINOR] Let errors propagate naturally so the original stack trace is preserved.
-    return prisma.employee.findUnique({ where: { id } }) as Promise<Employee | null>;
+  async findOne(id: number): Promise<any | null> {
+    if (!id || id <= 0) {
+      throw new Error('Invalid ID');
+    }
+
+    try {
+      return await prisma.employee.findUnique({ where: { id } });
+    } catch (error) {
+      throw new Error('Failed to fetch employee by ID', { cause: error });
+    }
   }
 }
-
-// TODO: [MAJOR] Add unit tests for EmployeeRepository (mock prisma client) covering:
-//   - findAll returns paginated results
-//   - findOne returns an employee when found
-//   - findOne returns null when not found
-//   - prisma errors propagate without being swallowed
