@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, RequestHandler } from 'express';
 import { provisionInfrastructure } from '../controllers/infrastructureController';
 import {
   authMiddleware,
   adminOnlyMiddleware,
 } from '../middleware/auth.middleware';
 
-const router = Router();
+const router: Router = Router();
 
 /**
  * @route POST /api/infrastructure/provision
@@ -14,8 +14,8 @@ const router = Router();
  */
 router.post(
   '/provision',
-  authMiddleware,
-  adminOnlyMiddleware,
+  authMiddleware as RequestHandler,
+  adminOnlyMiddleware as RequestHandler,
   provisionInfrastructure,
 );
 
